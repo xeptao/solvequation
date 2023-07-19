@@ -18,7 +18,7 @@ def validate_eqn(eqn: str, var: str):
     allowed = ("+", "-" "/", "*", "^", "=", var)
     error = Error(eqn, var)
     equal_count = 0
-    errors = {
+    tags = {
         "input": "InputError",
         "logic": "LogicError",
         "syntax": "SyntaxError",
@@ -26,16 +26,16 @@ def validate_eqn(eqn: str, var: str):
     common_messages = [lambda a, b: f"{a} and {b} can't be neighbours"]
 
     if "=" not in eqn:
-        error.throw(errors["logic"], "An equation can't be made without an =")
+        error.throw(tags["logic"], "An equation can't be made without an =")
 
     if var not in eqn:
         error.throw(
-            errors["input"], f"Your equation needs to have {var} in it"
+            tags["input"], f"Your equation needs to have {var} in it"
         )
 
     if len(var) != 1:
         error.throw(
-            errors["input"],
+            tags["input"],
             f"Your variable needs to be one character",
         )
 
@@ -44,19 +44,19 @@ def validate_eqn(eqn: str, var: str):
         is_first_letter = i == 0
 
         if not letter.isdigit() and letter not in allowed:
-            error.throw(errors["input"], f"{letter} isn't allowed")
+            error.throw(tags["input"], f"{letter} isn't allowed")
 
         if letter == "=":
             if is_last_letter or is_first_letter:
                 error.throw(
-                    errors["logic"],
+                    tags["logic"],
                     "An equation can't be formed if there isn't two sides",
                 )
 
             equal_count += 1
 
         if equal_count > 1:
-            error.throw(errors["logic"], "There can't be multiple '='s")
+            error.throw(tags["logic"], "There can't be multiple '='s")
 
         if not is_first_letter:
             prev = eqn[i - 1]
@@ -68,7 +68,7 @@ def validate_eqn(eqn: str, var: str):
                 and prev == var
             ):
                 error.throw(
-                    errors["syntax"],
+                    tags["syntax"],
                     common_messages[0](letter, prev),
                 )
 
@@ -79,13 +79,13 @@ def validate_eqn(eqn: str, var: str):
                 lambda x: x != "=",
             ):
                 error.throw(
-                    errors["syntax"],
+                    tags["syntax"],
                     common_messages[0](letter, prev),
                 )
 
                 if letter == prev:
                     error.throw(
-                        errors["syntax"],
+                        tags["syntax"],
                         common_messages[0](letter, prev),
                     )
 
@@ -95,8 +95,8 @@ def validate_eqn(eqn: str, var: str):
 
     if left == right:
         error.throw(
-            errors["logic"], "Nothing to compute since both sides are equal"
+            tags["logic"], "Nothing to compute since both sides are equal"
         )
 
     if any_is_true((left, right), lambda x: x == var):
-        error.throw(errors["logic"], "This equation has already been solved")
+        error.throw(tags["logic"], "This equation has already been solved")
