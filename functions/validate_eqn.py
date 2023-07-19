@@ -1,8 +1,21 @@
 from classes import Error
 
 
+def all_are_true(inputs: tuple, *conditions):
+    results = []
+
+    for condition in conditions:
+        results.append(all(condition(input) for input in inputs))
+
+    return False not in results
+
+
+def any_is_true(inputs: tuple, condition):
+    return any(condition(input) for input in inputs)
+
+
 def validate_eqn(eqn: str, var: str):
-    allowed = ["+", "-" "/", "*", "^", "=", var]
+    allowed = ("+", "-" "/", "*", "^", "=", var)
     error = Error(eqn, var)
     equal_count = 0
     errors = {
@@ -59,13 +72,16 @@ def validate_eqn(eqn: str, var: str):
                     common_messages[0](letter, prev),
                 )
 
-            if letter in allowed and prev in allowed:
-                if letter != var and prev != var:
-                    if letter != "=" and prev != "=":
-                        error.throw(
-                            errors["syntax"],
-                            common_messages[0](letter, prev),
-                        )
+            if all_are_true(
+                (letter, prev),
+                lambda x: x in allowed,
+                lambda x: x != var,
+                lambda x: x != "=",
+            ):
+                error.throw(
+                    errors["syntax"],
+                    common_messages[0](letter, prev),
+                )
 
                 if letter == prev:
                     error.throw(
@@ -82,5 +98,5 @@ def validate_eqn(eqn: str, var: str):
             errors["logic"], "Nothing to compute since both sides are equal"
         )
 
-    if left == var or right == var:
+    if any_is_true((left, right), lambda x: x == var):
         error.throw(errors["logic"], "This equation has already been solved")
