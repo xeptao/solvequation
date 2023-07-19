@@ -1,5 +1,5 @@
 class Error:
-    def __init__(self, eqn: str, var: str) -> None:
+    def __init__(self, eqn: str, var: str):
         self.var = var
         self.eqn = eqn 
     
