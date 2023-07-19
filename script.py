@@ -1,5 +1,12 @@
+from functions import validate_eqn
+
 def solve(eqn: str, var: str) -> str:
-    pass
+    eqn = eqn.replace(" ", "")
+    result = ""
+
+    validate_eqn(eqn, var)
+
+    return result
 
 
 if __name__ == "__main__":
