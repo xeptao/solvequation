@@ -81,7 +81,7 @@ def validate_eqn(eqn: str, var: str):
         is_first = i == 0
 
         if not letter.isdigit() and letter not in allowed:
-            error.throw(tags["input"], f"{letter} isn't allowed")
+            error.throw(tags["input"], f"{letter} isn't allowed", i, i)
 
         if letter == "=":
             equal_count += 1
@@ -90,6 +90,8 @@ def validate_eqn(eqn: str, var: str):
                 error.throw(
                     tags["logic"],
                     "An equation can't be formed if there isn't two sides",
+                    i,
+                    i
                 )
 
             if equal_count > 1:
@@ -107,6 +109,8 @@ def validate_eqn(eqn: str, var: str):
                 error.throw(
                     tags["syntax"],
                     common_messages[0](letter, prev),
+                    i,
+                    i + 1
                 )
 
             if all_are_true(
@@ -119,6 +123,8 @@ def validate_eqn(eqn: str, var: str):
                     error.throw(
                         tags["syntax"],
                         common_messages[0](letter, prev),
+                        i,
+                        i + 1
                     )
 
                 if prev != "-":
@@ -127,6 +133,8 @@ def validate_eqn(eqn: str, var: str):
                 error.throw(
                     tags["syntax"],
                     common_messages[0](letter, prev),
+                    i,
+                    i + 1
                 )
 
 
