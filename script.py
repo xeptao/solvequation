@@ -15,10 +15,11 @@ def solve(eqn: str, var: str) -> str:
         result (str): The result of the equation
     """
 
+    TOKEN_SYMBOLS = ("+", "-", "/", "*", "^", "=")
+    TOKEN_NAMES = ("PLUS", "MINUS", "DIV", "MUL", "EXP", "EQUAL")
+
     eqn = eqn.replace(" ", "")
     result = ""
-    token_symbols = ["+", "-", "/", "*", "^", "="]
-    token_names = ["PLUS", "MINUS", "DIV", "MUL", "EXP", "EQUAL"]
     operations = []
     curr_num = ""
 
@@ -39,10 +40,10 @@ def solve(eqn: str, var: str) -> str:
 
             continue
 
-        if letter in token_symbols:
-            tok_name_idx = token_symbols.index(letter)
+        if letter in TOKEN_SYMBOLS:
+            tok_name_idx = TOKEN_SYMBOLS.index(letter)
 
-            operations.append(token_names[tok_name_idx])
+            operations.append(TOKEN_NAMES[tok_name_idx])
 
     return result
 
