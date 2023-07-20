@@ -1,7 +1,20 @@
+"""
+The module for solve()
+"""
+
 from functions import validate_eqn
 
 
 def solve(eqn: str, var: str) -> str:
+    """
+    Parameters:
+        eqn (str): The equation
+        var (str): The variable name used in the equation
+
+    Returns:
+        result (str): The result of the equation
+    """
+
     eqn = eqn.replace(" ", "")
     result = ""
     token_symbols = ["+", "-", "/", "*", "^", "="]
@@ -16,9 +29,9 @@ def solve(eqn: str, var: str) -> str:
             curr_num += letter
 
             if i != len(eqn) - 1:
-                next = eqn[i + 1]
+                next_letter = eqn[i + 1]
 
-                if not next.isdigit():
+                if not next_letter.isdigit():
                     operations.append(curr_num)
                     curr_num = ""
             else:
