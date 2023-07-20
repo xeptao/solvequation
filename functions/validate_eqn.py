@@ -115,16 +115,20 @@ def validate_eqn(eqn: str, var: str):
                 lambda x: x != var,
                 lambda x: x != "=",
             ):
-                error.throw(
-                    tags["syntax"],
-                    common_messages[0](letter, prev),
-                )
-
                 if letter == prev:
                     error.throw(
                         tags["syntax"],
                         common_messages[0](letter, prev),
                     )
+
+                if prev != "-":
+                    continue
+
+                error.throw(
+                    tags["syntax"],
+                    common_messages[0](letter, prev),
+                )
+
 
     # placed at end because unpack would give an error if there were more
     # than one equal signs
