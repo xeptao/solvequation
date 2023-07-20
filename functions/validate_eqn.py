@@ -130,6 +130,11 @@ def validate_eqn(eqn: str, var: str):
                     tags["syntax"], common_messages[0](letter, prev), i, i + 1
                 )
 
+            if letter == "=" and not prev.isdigit() and prev != var:
+                error.throw(
+                    tags["syntax"], common_messages[0](letter, prev), i, i + 1
+                )
+
     # placed at end because unpack would give an error if there were more
     # than one equal signs
     left, right = eqn.split("=")
