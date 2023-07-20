@@ -24,6 +24,13 @@ class Error:
                 f"{self.yellow}{' ' * (start - 1)}{'^' * (end - start + 1)}{self.end}"
             )
 
+        if start and not end:
+            print(self.eqn)
+            print(
+                f"{self.yellow}{' ' * (start - 1)}^{self.end}"
+            )
+            
+
         print(f"{self.red}{error_type}{self.end}: {error_msg}")
 
         exit(1)
