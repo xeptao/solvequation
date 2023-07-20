@@ -106,7 +106,7 @@ def validate_eqn(eqn: str, var: str):
                 and prev == var
             ):
                 error.throw(
-                    tags["syntax"], common_messages[0](letter, prev), i, i + 1
+                    tags["syntax"], common_messages[0](prev, letter), i, i + 1
                 )
 
             if all_are_true(
@@ -118,7 +118,7 @@ def validate_eqn(eqn: str, var: str):
                 if letter == prev:
                     error.throw(
                         tags["syntax"],
-                        common_messages[0](letter, prev),
+                        common_messages[0](prev, letter),
                         i,
                         i + 1,
                     )
@@ -127,12 +127,12 @@ def validate_eqn(eqn: str, var: str):
                     continue
 
                 error.throw(
-                    tags["syntax"], common_messages[0](letter, prev), i, i + 1
+                    tags["syntax"], common_messages[0](prev, letter), i, i + 1
                 )
 
             if letter == "=" and not prev.isdigit() and prev != var:
                 error.throw(
-                    tags["syntax"], common_messages[0](letter, prev), i, i + 1
+                    tags["syntax"], common_messages[0](prev, letter), i, i + 1
                 )
 
     # placed at end because unpack would give an error if there were more
