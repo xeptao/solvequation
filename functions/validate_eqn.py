@@ -36,7 +36,7 @@ def validate_eqn(eqn: str, var: str):
     if len(var) != 1:
         error.throw(
             tags["input"],
-            f"Your variable needs to be one character",
+            "Your variable needs to be one character",
         )
 
     for i, letter in enumerate(eqn):
